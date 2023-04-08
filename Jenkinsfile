@@ -41,7 +41,7 @@ spec:
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             withKubeConfig([namespace: "ali"]) {
-                sh 'kubectl apply deployment.yaml'
+                sh 'kubectl apply -f deployment.yaml -n ali'
             }
         }
     }
