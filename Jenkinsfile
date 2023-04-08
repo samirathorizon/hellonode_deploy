@@ -18,7 +18,7 @@ spec:
 '''){
     node(POD_LABEL) {
         stage('Build') {
-            git 'https://github.com/samirathorizon/hellonode_push_and_deploy.git'
+            git 'https://github.com/samirathorizon/hellonode_push_and_deploy'
             container('shell') {
                 stage('Build a Maven project') {
                     sh '/kaniko/executor  --context `pwd` --destination=hellonode --no-push'
@@ -40,7 +40,7 @@ spec:
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
-            git 'https://github.com/samirathorizon/hellonode_push_and_deploy.git'
+            git 'https://github.com/samirathorizon/hellonode_push_and_deploy'
             container('kubectl') {
                 withKubeConfig([namespace: "ali"]) {
                     sh 'kubectl apply -f deployment.yaml -n ali'
