@@ -40,7 +40,6 @@ spec:
     command:
     - sleep 
     - "infinity"
-    tty: true
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
