@@ -39,8 +39,9 @@ spec:
     imagePullPolicy: IfNotPresent
     command:
     - "/bin/sh"
-    - "-c"
-    - "sleep infinity"
+      "-c"
+      "sleep infinity"
+    tty: true
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
