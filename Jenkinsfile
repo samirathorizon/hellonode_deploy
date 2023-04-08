@@ -27,7 +27,17 @@ spec:
         }
     }
 }
-podTemplate(inheritFrom: 'default'){
+podTemplate(yaml: '''
+kind: Pod
+metadata:
+  name: kaniko
+  namespace: ali
+spec:
+  containers:
+  - name: kubectl
+    image: bitnami/kubectl
+    imagePullPolicy: IfNotPresent
+''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             withKubeConfig([namespace: "ali"]) {
