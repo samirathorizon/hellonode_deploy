@@ -37,6 +37,8 @@ spec:
   - name: kubectl
     image: bitnami/kubectl
     imagePullPolicy: IfNotPresent
+    command:
+     - cat
     ty: true
 ''') {
     node (POD_LABEL) {
