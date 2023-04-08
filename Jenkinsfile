@@ -28,7 +28,7 @@ spec:
     }
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
-            withKubeConfig([credentialsId: 'ali') {
+            withKubeConfig([credentialsId: 'ali']) {
                 sh 'kubectl apply -f deployment.yaml'
             }
         }
