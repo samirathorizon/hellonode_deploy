@@ -26,6 +26,8 @@ spec:
             }
         }
     }
+}
+podTemplate(inheritFrom: 'default'){
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             withKubeConfig([namespace: "ali"]) {
