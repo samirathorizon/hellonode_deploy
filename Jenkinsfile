@@ -27,6 +27,10 @@ spec:
         }
     }
     node (POD_LABEL) {
-         kubernetesApply(file: 'deployment.yaml', environment: 'ali')
+        stage('Apply Kubernetes files') {
+            withKubeConfig([credentialsId: 'ali') {
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
     }
 }
