@@ -27,6 +27,6 @@ spec:
         }
     }
     node (POD_LABEL) {
-         kubernetesApply(file: "deployment.yaml")
+         kubernetesApply(file: 'deployment.yaml', environment: 'ali')
     }
 }
