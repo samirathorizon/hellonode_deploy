@@ -34,7 +34,7 @@ metadata:
 spec:
   containers:
   - name: install-kubectl
-    image: allanlei/kubectl
+    image: trstringer/internal-kubectl
     imagePullPolicy: IfNotPresent
     command: ["/bin/bash cat"]
     tty: true
