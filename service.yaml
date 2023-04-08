@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     app: hellonode-app 
-  type: LoadBalancer #Type of the Kubernetes Service
+  type: ClusterIP #Type of the Kubernetes Service
   ports:
   - protocol: TCP
     port: 8000 #Service port
-    targetPort: 8000 #The port for the React.js application container
+    targetPort: 8000 #The port for the node.js application container
