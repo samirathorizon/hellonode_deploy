@@ -30,23 +30,18 @@ spec:
 podTemplate(yaml: '''
 kind: Pod
 metadata:
-  name: kubectl
+  name: internal-kubectl
   namespace: ali
 spec:
+   serviceAccountName: jenkins
   containers:
   - name: kubectl
-    image: bitnami/kubectl
-    imagePullPolicy: IfNotPresent
-    command:
-    - "/bin/sh"
-    - "-c"
-    - "sleep infinity"
-    tty: true
+    image: trstringer/internal-kubectl:latest
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             checkout scm
-            container('kubectl') {
+            container('internal-kubectl') {
                 withKubeConfig([namespace: "ali"]) {
                 //    sh 'kubectl apply -f deployment.yaml -n ali'
                      sh 'ls -lrt'
