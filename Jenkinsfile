@@ -29,14 +29,14 @@ spec:
 podTemplate(yaml: '''
 kind: Pod
 metadata:
-  name: install-kubectl
+  name: kubectl
   namespace: ali
 spec:
   containers:
-  - name: install-kubectl
-    image: trstringer/internal-kubectl
+  - name: kubectl
+    image: portainer/kubectl-shell
     imagePullPolicy: IfNotPresent
-    command: ["/bin/bash cat"]
+    command: ["tail -f /dev/null"]
     tty: true
 ''') {
     node (POD_LABEL) {
