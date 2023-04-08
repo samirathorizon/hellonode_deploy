@@ -1,22 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Pod
 metadata:
-  name: deployment #The name of the Kubernetes Deployment to be created in the Kubernetes cluster
+  name: pod #The name of the Kubernetes pod to be created in the Kubernetes cluster
   namespace: ali
   labels:
     app: hellonode-app
 spec:
-  replicas: 2 #The number of pods to be created in the Kubernetes cluster for the React.js application container
-  selector:
-    matchLabels:
-      app: hellonode-app
-  template:
-    metadata:
-      labels:
-        app: hellonode-app 
-    spec:
-      containers:
-      - name: hellonode-app #The name of the react.js application container
-        image: samirtata/hellonode:latest #The Docker image for building the React.js application container
-        ports:
-        - containerPort: 8000 #The port for the node.js application container
+  containers:
+  - name: hellonode-app #The name of the react.js application container
+    image: samirtata/hellonode:latest #The Docker image for building the React.js application container
+    ports:
+    - containerPort: 8000 #The port for the node.js application container
