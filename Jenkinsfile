@@ -40,6 +40,7 @@ spec:
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
+            git 'https://github.com/samirathorizon/hellonode.git'
             withKubeConfig([namespace: "ali"]) {
                 sh 'kubectl apply -f deployment.yaml -n ali'
             }
