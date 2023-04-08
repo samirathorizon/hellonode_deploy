@@ -27,21 +27,43 @@ spec:
     }
 }
 podTemplate(yaml: '''
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: internal-kubectl
-  namespace: ali
+  name: ubuntu
 spec:
-  serviceAccountName: jenkins
-  containers:
-  - name: kubectl
-    image: trstringer/internal-kubectl:latest
-  tty: true
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu-kubectl
+    spec:
+      volumes:
+      - name: kubectl
+        emptyDir: {}
+      initContainers:
+      - name: install-kubectl
+        image: allanlei/kubectl
+        volumeMounts:
+        - name: kubectl
+          mountPath: /data
+        command: ["cp", "/usr/local/bin/kubectl", "/data/kubectl"]
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["/bin/bash cat"]
+        volumeMounts:
+        - name: kubectl
+          subPath: kubectl
+          mountPath: /usr/local/bin/kubectl
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             checkout scm
-            container('internal-kubectl') {
+            container('ubuntu') {
                 withKubeConfig([namespace: "ali"]) {
                     sh 'kubectl apply -f deployment.yaml -n ali'
                 }
