@@ -27,28 +27,38 @@ spec:
     }
 }
 podTemplate(yaml: '''
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: ubuntu
 spec:
-  volumes:
-  - name: kubectl
-    emptyDir: {}
-  initContainers:
-  - name: install-kubectl
-    image: allanlei/kubectl
-    volumeMounts:
-    - name: kubectl
-      mountPath: /data
-    command: ["cp", "/usr/local/bin/kubectl", "/data/kubectl"]
-  containers:
-  - name: ubuntu
-    image: ubuntu
-    command: ["/bin/bash cat"]
-    volumeMounts:
-    - name: kubectl
-      subPath: kubectl
-      mountPath: /usr/local/bin/kubectl
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu-kubectl
+    spec:
+      volumes:
+      - name: kubectl
+        emptyDir: {}
+      initContainers:
+      - name: install-kubectl
+        image: allanlei/kubectl
+        volumeMounts:
+        - name: kubectl
+          mountPath: /data
+        command: ["cp", "/usr/local/bin/kubectl", "/data/kubectl"]
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["/bin/bash cat"]
+        volumeMounts:
+        - name: kubectl
+          subPath: kubectl
+          mountPath: /usr/local/bin/kubectl
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
