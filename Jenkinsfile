@@ -1,4 +1,3 @@
-    
 podTemplate(yaml: '''
 kind: Pod
 metadata:
