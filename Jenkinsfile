@@ -30,6 +30,7 @@ podTemplate(yaml: '''
 kind: Deployment
 metadata:
   name: ubuntu
+  namespace: ali
 spec:
   replicas: 1
   selector:
