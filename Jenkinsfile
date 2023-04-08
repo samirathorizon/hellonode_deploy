@@ -14,7 +14,7 @@ spec:
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
             checkout scm
-            container('ubuntu') {
+            container('kubectl') {
                 withKubeConfig([namespace: "ali"]) {
                     sh 'kubectl apply -f deployment.yaml -n ali'
                 }
