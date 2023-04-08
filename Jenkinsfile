@@ -36,6 +36,7 @@ spec:
   containers:
   - name: kubectl
     image: trstringer/internal-kubectl:latest
+  tty: true
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
