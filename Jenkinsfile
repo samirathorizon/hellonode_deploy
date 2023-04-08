@@ -37,6 +37,7 @@ spec:
   - name: kubectl
     image: bitnami/kubectl
     imagePullPolicy: IfNotPresent
+    ty: true
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
