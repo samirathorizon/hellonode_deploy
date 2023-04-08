@@ -31,4 +31,13 @@ spec:
         }
       }
     }
+  
+    stage('Deploying hellonode container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+        }
+      }
+    }
+  
   }   
