@@ -1,3 +1,4 @@
+apiVersion: apps/v1
 kind: Pod
 metadata:
   name: pod #The name of the Kubernetes pod to be created in the Kubernetes cluster
