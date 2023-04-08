@@ -38,8 +38,9 @@ spec:
     image: bitnami/kubectl
     imagePullPolicy: IfNotPresent
     command:
-     - cat
-    ty: true
+    - sleep 
+    - "infinity"
+    tty: true
 ''') {
     node (POD_LABEL) {
         stage('Apply Kubernetes files') {
