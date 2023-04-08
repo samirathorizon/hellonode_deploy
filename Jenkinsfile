@@ -19,7 +19,7 @@ spec:
         stage('Build') {
             checkout scm
             container('shell') {
-                stage('Build a Maven project') {
+                stage('Build a  project') {
                     sh '/kaniko/executor  --context `pwd` --destination=hellonode --no-push'
                 }
             }
@@ -32,7 +32,7 @@ metadata:
   name: internal-kubectl
   namespace: ali
 spec:
-   serviceAccountName: jenkins
+  serviceAccountName: jenkins
   containers:
   - name: kubectl
     image: trstringer/internal-kubectl:latest
