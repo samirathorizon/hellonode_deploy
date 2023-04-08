@@ -43,7 +43,10 @@ spec:
        stage('Deploying hellonode container to Kubernetes') {
            steps {
                script {
-                   kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+                  // kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+                    sh '''#!/busybox/sh 
+                    kubectl apply -n ali deployment.yaml
+                     '''
                }
            }
        }
