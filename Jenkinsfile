@@ -27,7 +27,6 @@ spec:
     }
 }
 podTemplate(yaml: '''
-apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: ubuntu
