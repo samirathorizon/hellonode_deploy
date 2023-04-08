@@ -20,7 +20,7 @@ spec:
             checkout scm
             container('shell') {
                 stage('Build a  project') {
-                    sh '/kaniko/executor  --context `pwd` --destination=hellonode --no-push'
+                    sh '/kaniko/executor  --context `pwd` --destination=hellonode'
                 }
             }
         }
@@ -36,7 +36,7 @@ spec:
   - name: kubectl
     image: portainer/kubectl-shell
     imagePullPolicy: IfNotPresent
-    command: ["tail -f /dev/null"]
+    command: ["bach", "tail -f /dev/null"]
     tty: true
 ''') {
     node (POD_LABEL) {
