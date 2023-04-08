@@ -8,7 +8,7 @@ spec:
   - name: kubectl
     image: portainer/kubectl-shell
     imagePullPolicy: IfNotPresent
-    command: ["bach", "tail -f /dev/null"]
+    command: ["bash", "tail -f /dev/null"]
     tty: true
 ''') {
     node (POD_LABEL) {
