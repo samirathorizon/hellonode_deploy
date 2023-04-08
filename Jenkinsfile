@@ -1,4 +1,8 @@
-podTemplate(yaml: '''
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'kaniko'
+             yaml """
 kind: Pod
 metadata:
   name: kaniko
@@ -14,27 +18,32 @@ spec:
     command:
      - /busybox/cat
     tty: true
-'''){
-  node(POD_LABEL) {
-    def IMAGE_PUSH_DESTINATION="samirathorizon/hellonode"
-    stage('Build with Kaniko') {
-        checkout scm
-        container(name: 'kaniko', shell: '/busybox/sh') {
-            withCredentials([file(credentialsId: 'docker-credentials', variable: 'DOCKER_CONFIG_JSON')]) {
-                withEnv(['PATH+EXTRA=/busybox',"IMAGE_PUSH_DESTINATION=${IMAGE_PUSH_DESTINATION}"]) {
-                    sh '''#!/busybox/sh
-                        cp $DOCKER_CONFIG_JSON /kaniko/.docker/config.json
-                        /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION
-                    '''
-                }
+"""
+        }
+    }
+    environment {
+        IMAGE_PUSH_DESTINATION="samirathorizon/hellonode"
+    }
+    stages {
+        stage('Build with Kaniko') {
+            steps {
+                checkout scm
+                container(name: 'kaniko', shell: '/busybox/sh') {
+                   withCredentials([file(credentialsId: 'docker-credentials', variable: 'DOCKER_CONFIG_JSON')]) {
+                      withEnv(['PATH+EXTRA=/busybox',"IMAGE_PUSH_DESTINATION=${IMAGE_PUSH_DESTINATION}"]) {
+                         sh '''#!/busybox/sh
+                            cp $DOCKER_CONFIG_JSON /kaniko/.docker/config.json
+                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION
+                          '''
+                     }
+                  }
+              }
             }
         }
-      }
-    }
-  
-    stage('Deploying hellonode container to Kubernetes') {
+       stage('Deploying hellonode container to Kubernetes') {
         script {
           kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
       }
     }
-  }   
+    }
+}
