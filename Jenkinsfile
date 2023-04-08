@@ -43,7 +43,8 @@ spec:
             checkout scm
             container('kubectl') {
                 withKubeConfig([namespace: "ali"]) {
-                    sh 'kubectl apply -f deployment.yaml -n ali'
+                //    sh 'kubectl apply -f deployment.yaml -n ali'
+                     sh 'ls -lrt'
                 }
             }
         }
