@@ -2,7 +2,7 @@ podTemplate(yaml: '''
 kind: Pod
 metadata:
   name: kubectl
-  namespace: ali
+  namespace: samirtata
 spec:
   containers:
   - name: kubectl
@@ -15,8 +15,8 @@ spec:
         stage('Apply Kubernetes files') {
             checkout scm
             container('kubectl') {
-                withKubeConfig([namespace: "ali"]) {
-                    sh 'kubectl apply -f deployment.yaml -n ali'
+                withKubeConfig([namespace: "samirtata"]) {
+                    sh 'kubectl apply -f deployment.yaml -n samirtata'
                 }
             }
         }
