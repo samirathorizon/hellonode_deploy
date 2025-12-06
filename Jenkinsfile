@@ -15,9 +15,7 @@ spec:
         stage('Apply Kubernetes files') {
             checkout scm
             container('kubectl') {
-                withKubeConfig([namespace: "samir"]) {
                     sh 'kubectl apply -f deployment.yaml -n samir'
-                }
             }
         }
     }
